@@ -1,5 +1,7 @@
 # Backend ( express + prisma )
 
+![Alt text](./prisma-erd.svg)
+
 # Folder Stuctrue Summary
 
 ```bash 
