@@ -36,7 +36,7 @@ const TrasactionTable = ( {transactions} : {transactions : TranasctionType[]}) =
             //console.log(response.data);
             const resData  = response.data;
             //setCategory(resData)
-            console.log("resData",resData)
+            console.log("message",resData.message)
             navigate(`${pathname}` ,  { replace: true });
             window.location.reload();
           
@@ -56,7 +56,7 @@ const TrasactionTable = ( {transactions} : {transactions : TranasctionType[]}) =
 
     useEffect(() => {
       setTransactions(transactions)
-      console.log(tranasctionList)
+      //console.log(tranasctionList)
     },[tranasctionList]);
 
   return (
@@ -67,7 +67,6 @@ const TrasactionTable = ( {transactions} : {transactions : TranasctionType[]}) =
       <TableCaption>A list of your recent tranasction.</TableCaption>
       <TableHeader>
         <TableRow>
-        <TableHead className='text-center'>Account Name</TableHead>
           <TableHead className='text-center'>ID</TableHead>
           <TableHead className='text-center'>Slip</TableHead>
           <TableHead className='text-center'>Note</TableHead>
@@ -79,7 +78,7 @@ const TrasactionTable = ( {transactions} : {transactions : TranasctionType[]}) =
         {transactions.map((trans ,count) => (
           <TableRow key={trans.id}>
             <TableCell className="font-medium">{trans.id}</TableCell>
-            <TableCell><img src={`http://localhost:8080/api/image/${trans.imageUrl}`} className="mt-4 object-cover w-32 h-32"alt="Thumb" ></img></TableCell>
+            <TableCell className='flex justify-center'><img src={`http://localhost:8080/api/image/${trans.imageUrl}`} className="mt-4 object-cover w-32 h-32"alt="Thumb" ></img></TableCell>
             <TableCell >{trans.note}</TableCell>
             <TableCell className='text-right'>{trans.amount}</TableCell>
             <TableCell><Button className='bg-red-500 p-2 rounded-md text-white' onClick={() => handleDeleteClick(trans.id)} >Delete</Button></TableCell>

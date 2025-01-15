@@ -5,11 +5,13 @@ const {
   getCategory,
   deleteCategory,
   updateCategory,
+  getCategoryById,
 } = require("../controller/category");
 const { authCheck } = require("../middleware/authCheck");
 const categoryRouter = express.Router();
 
-categoryRouter.get("/category", authCheck, getCategory);
+categoryRouter.get("/categories", authCheck, getCategory);
+categoryRouter.get("/category/:id", authCheck, getCategoryById);
 categoryRouter.post("/category", authCheck, createCategory);
 categoryRouter.delete("/category/:id", authCheck, deleteCategory);
 categoryRouter.put("/category/:id", authCheck, updateCategory);

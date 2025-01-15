@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { Input } from '../ui/input'
-import { AddButton } from '../common/Buttons'
 import { Textarea } from '../ui/textarea'
 import InputFile from '../common/InputFile'
 
@@ -8,20 +7,26 @@ import { CategoryType } from '@/utils/type'
 import axios from 'axios'
 import CategorySelect from '../common/CategorySelect'
 import { Button } from '../ui/button'
+import { useLocation, useNavigate } from 'react-router-dom'
 const TranasctionCreate = () => {
 
     const [categoryList, setCategory] = useState<CategoryType[]>([])
     const [isLoading, setIsLoading] = useState(false);
+    const location =  useLocation()
+    const pathname = location.pathname
+    const navigate =  useNavigate() 
+
+
     const token = localStorage.getItem('token');
 
-    const  getData = async () => {
+    const  getCategories = async () => {
         setIsLoading(true)
         let data :CategoryType[] = [];
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        await axios.get(`http://localhost:8080/api/category?limit=${100}`)
+        await axios.get(`http://localhost:8080/api/categories?limit=${100}`)
         .then(function (response)  {
           const resData  = response.data;
-          console.log("resData",resData)
+          //console.log("resData",resData)
           data = resData.data;
          
         
@@ -44,7 +49,7 @@ const TranasctionCreate = () => {
       }
 
     useEffect(() =>{
-         //const data =  getData();
+         //const data =  getCategories();
          //console.log(data);
     },[]);
 
@@ -57,13 +62,10 @@ const TranasctionCreate = () => {
     const handleOnClick = async (e:any) => {
         e.preventDefault();
         if(typeof image === 'undefined') return;
-
         const formData= new FormData();
-        // formData.append('displayName', displayName);
         formData.append('amount', amount);
         formData.append('note', note);
-        formData.append('categoryId', '24');
-        formData.append('accountId', '9667dcc6-e99f-44ee-9641-68730e147270');
+        formData.append('categoryId', '1');
         formData.append('image', image);
      
 
@@ -72,19 +74,16 @@ const TranasctionCreate = () => {
         console.log(value);
         }
 
-        console.log('formData',formData)
-        console.log('clicked')
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         axios.defaults.headers.post['Content-Type'] = 'multipart/form-data';
         axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
- 
         await axios.post('http://localhost:8080/api/transaction', formData  )
           .then(function (response) {
             console.log('created transaction successfully');
             const resData  = response.data.data;
             //setCategory(resData)
-            //navigate(`${pathname}` ,  { replace: true });
-            //window.location.reload();
+            navigate(`${pathname}` ,  { replace: true });
+            window.location.reload();
           
           })
           .catch(function (error) {

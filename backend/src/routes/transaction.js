@@ -7,12 +7,13 @@ const {
   updateTransaction,
   getTransactionByAccount,
   getTransactionByCategory,
+  getTransactionById,
 } = require("../controller/transaction");
 const { authCheck } = require("../middleware/authCheck");
 const { upload } = require("../utils/upload");
 const transactionRouter = express.Router();
 
-transactionRouter.get("/transaction", authCheck, getTransaction);
+transactionRouter.get("/transactions", authCheck, getTransaction);
 transactionRouter.get(
   "/transaction/account/:id",
   authCheck,
@@ -23,6 +24,7 @@ transactionRouter.get(
   authCheck,
   getTransactionByCategory
 );
+transactionRouter.get("/transaction/:id", authCheck, getTransactionById);
 transactionRouter.post("/transaction", authCheck, upload, createTransaction);
 transactionRouter.delete("/transaction/:id", authCheck, deleteTransaction);
 transactionRouter.put("/transaction/:id", authCheck, updateTransaction);

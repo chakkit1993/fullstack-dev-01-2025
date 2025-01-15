@@ -40,7 +40,8 @@ const CategoryTable = ({categories} : {categories : CategoryType[]}) => {
           //console.log(response.data);
           const resData  = response.data;
           //setCategory(resData)
-          console.log("resData",resData)
+          //console.log("resData",resData)
+          console.log("message",resData.message)
           navigate(`${pathname}` ,  { replace: true });
           window.location.reload();
         

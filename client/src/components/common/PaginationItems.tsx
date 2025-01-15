@@ -10,7 +10,7 @@ import {
   } from "@/components/ui/pagination"
 import { useLocation } from 'react-router-dom'
   
-const PaginationTable = ({currentPage ,  totalPage , limitPage}: { currentPage : number , limitPage  : number , totalPage  : number}) => {
+const PaginationItems = ({currentPage ,  totalPage , limitPage}: { currentPage : number , limitPage  : number , totalPage  : number}) => {
     const [curr , setCurr] = useState<Number>()
     const location =  useLocation()
     const pathname = location.pathname
@@ -18,7 +18,7 @@ const PaginationTable = ({currentPage ,  totalPage , limitPage}: { currentPage :
     
     useEffect(() => {
         //setCurr(currentPage)
-        console.log("message",pathname)
+        //console.log("message",pathname)
     },[curr])
 
 
@@ -40,11 +40,11 @@ const PaginationTable = ({currentPage ,  totalPage , limitPage}: { currentPage :
       <Pagination>
         <PaginationContent>
           <PaginationItem>
-            <PaginationPrevious href="#" />
+            <PaginationPrevious href={`${pathname}?page=${currentPage-1}&limit=${limitPage}`} />
           </PaginationItem>
               {paginationItems}
           <PaginationItem>
-            <PaginationNext href="#" />
+            <PaginationNext href={`${pathname}?page=${currentPage+1}&limit=${limitPage}`} />
           </PaginationItem>
         </PaginationContent>
       </Pagination>
@@ -52,4 +52,4 @@ const PaginationTable = ({currentPage ,  totalPage , limitPage}: { currentPage :
   )
 }
 
-export default PaginationTable
+export default PaginationItems

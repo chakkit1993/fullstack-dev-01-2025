@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from 'react'
-import PaginationTable from '../common/Pagination'
+import PaginationItems from '../common/PaginationItems'
 import TrasactionTable from './TrasactionTable'
 import SearchBox from '../common/SearchBox'
 import axios from 'axios'
@@ -32,8 +32,8 @@ const TranasctionContainer =  () => {
        setIsLoading(true)
        
        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-       await axios.get( `http://localhost:8080/api/transaction?page=${currPage}&limit=${sizePage}` ).then(function (response) {
-         console.log(response.data);
+       await axios.get( `http://localhost:8080/api/transactions?page=${currPage}&limit=${sizePage}` ).then(function (response) {
+         //console.log(response.data);
          const resData  = response.data;
          setTranasction(resData.data)
         //  setTotalItems(resData.total) // totalItems
@@ -62,7 +62,7 @@ const TranasctionContainer =  () => {
         {/* <SearchBox></SearchBox> */}
         <TranasctionCreate/>
         {isLoading ? <div>isLoading....</div> : <TrasactionTable transactions={tranasctionList}></TrasactionTable>} 
-        <PaginationTable currentPage={currPage}  totalPage={totalPage}  limitPage={sizePage}></PaginationTable>
+        <PaginationItems currentPage={currPage}  totalPage={totalPage}  limitPage={sizePage}></PaginationItems>
         </div>
   )
 }

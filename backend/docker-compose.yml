@@ -24,10 +24,13 @@ services:
       - postgres
     networks:
       - prisma-networks
-  backend:
+  dev:
     build: .
-    container_name: "backend"
+    container_name: "express-node"
     restart: "always"
+    volumes:
+    - .:/app
+    - /app/node_modules
     ports:
       - "8080:8080"
     depends_on:

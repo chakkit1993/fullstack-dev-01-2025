@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { CategoryType } from '../../utils/type';
 import CategoryTable from './CategoryTable';
 import SearchBox from '../common/SearchBox';
-import PaginationTable from '../common/Pagination';
+import PaginationItems from '../common/PaginationItems';
 import { AddButton } from '../common/Buttons';
 import CategoryCreate from './CategoryCreate';
 import { data, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
@@ -23,8 +23,6 @@ const CategoryContainer = () => {
 
     const navigate =  useNavigate() 
 
-
-    //const limitList = [5, 10, 15, 20, 25, 30];
     const location =  useLocation()
     const pathname = location.pathname
 
@@ -40,13 +38,11 @@ const CategoryContainer = () => {
         return navigate('/')
       }
       setIsLoading(true)
-       console.log('limit',sizePage)
-       console.log('page',currPage)
        // setCurrPage(Number(page))
        // setSizePage(Number(limit))
      //  axios.defaults.withCredentials = true;
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      await axios.get(`http://localhost:8080/api/category?page=${currPage}&limit=${sizePage}`).then(function (response) {
+      await axios.get(`http://localhost:8080/api/categories?page=${currPage}&limit=${sizePage}`).then(function (response) {
         //console.log(response.data);
         const resData  = response.data;
         setCategory(resData.data)
@@ -81,10 +77,9 @@ const CategoryContainer = () => {
 
 
 
-    function handleDataFromChild(data : string) {
+    function handlePageSize(data : string) {
       navigate(`${pathname}?page=${currPage}&limit=${data}` ,  { replace: true  }, );
       setSizePage(Number(data));
-      console.log('childData',data);
     }
 
 
@@ -96,8 +91,8 @@ const CategoryContainer = () => {
     
       <CategoryCreate/>
       {isLoading ? <div>isLoading....</div> : <CategoryTable categories={categoryList}></CategoryTable>} 
-      <PaginationTable currentPage={currPage}  totalPage={totalPage}  limitPage={sizePage} ></PaginationTable>
-      <PageSizeSelect limitList={limitList} defualtValue={sizePage}  sendDataToParent={handleDataFromChild}   />
+      <PaginationItems currentPage={currPage}  totalPage={totalPage}  limitPage={sizePage} ></PaginationItems>
+      <PageSizeSelect limitList={limitList} defualtValue={sizePage}  callBackPageSize={handlePageSize}   />
       </div>
 
 

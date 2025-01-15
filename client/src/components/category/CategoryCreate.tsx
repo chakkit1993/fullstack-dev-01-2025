@@ -11,8 +11,8 @@ const CategoryCreate = () => {
     const navigate =  useNavigate() 
     const [categoryName , setCategoryName] = React.useState('')
 
-    const handleOnClick = async () => {
-
+    const handleOnClick = async (e:any) => {
+        e.preventDefault()
         await axios.post('http://localhost:8080/api/category', {categoryName})
           .then(function (response) {
             console.log('created category successfully');
@@ -31,16 +31,19 @@ const CategoryCreate = () => {
     }
     
     useEffect(() =>{
-        console.log(categoryName)
+        //console.log(categoryName)
     },[categoryName])
 
   return (
     <div className='border  border-solid border-neutral-900 p-8 rounded-md mt-20'>
+       <h1>Create Category</h1>
         <form onSubmit={handleOnClick}>
-        <Input type='text' id='displayName' name='displayName' onChange={ (e) => {setCategoryName(e.target.value)}} ></Input> 
-        <Button  type='submit'  className=' bg-green-500'  >Add</Button>
+        <div className='flex flex-cols-2  mt-4'>
+          <Input type='text' id='displayName' name='displayName' placeholder='category name' onChange={ (e) => {setCategoryName(e.target.value)}} ></Input> 
+          <Button  type='submit'  className=' bg-green-500 mx-4'  >Add</Button>
+          </div>
+     
         </form>
-   
     </div>
   )
 }
